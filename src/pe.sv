@@ -10,7 +10,8 @@
 //                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////
 
-import pe_pkg::*;
+include "common.svh";
+import common_pkg::*;
 
 module pe (
     input  logic         clk_i,
@@ -22,52 +23,29 @@ module pe (
     output drain_data_t  drain_o
 );
 
-    matrix_data_t part_result_n, part_result_q;
-    matrix_data_t next_a_n, next_a_q;
-    matrix_data_t next_b_n, next_b_q;
+    //-----------------------
+    // Data Passthrough
+    //-----------------------
+    `FF_RESET(clk_i, rst_i, a_data_i, a_data_o, '0)
+    `FF_RESET(clk_i, rst_i, b_data_i, b_data_o, '0)
 
     //-----------------------
-    // Data Interface
+    // Internal registers
     //-----------------------
-    always_comb begin : data_interface
-        next_a_n = a_data_i;
-        next_b_n = b_data_i;
-        a_data_o = next_a_q;
-        b_data_o = next_b_q;
-        // Drain channel
-        drain_o.data   <= part_result_q.data;
-        drain_o.enable <= part_result_q.last;
+    data_t result_n, result_q;
+    logic    emit_n,   emit_q;
+    `FF_RESET(clk_i, rst_i, result_n, result_q, '0) //Partial FF
+    `FF_RESET(clk_i, rst_i,   emit_n,   emit_q, '0) //Emit FF
+    
+
+    always_comb begin : MAC_OPERATION
+        result_n = (result_q & {DATA_WIDTH{!emit_q}}) + (a_data_i.data * b_data_i.data);
+        emit_n   = (a_data_i.last && b_data_i.last);
     end
 
-    //-----------------------
-    // Registers
-    //-----------------------
-    always_ff @(posedge clk_i) begin
-        if (rst_i == 1'b1) begin
-            next_a_q.data      <= '0;
-            next_a_q.last      <= '0;
-            next_b_q.data      <= '0;
-            next_b_q.last      <= '0;
-            part_result_q.data <= '0;
-            part_result_q.last <= '0;
-        end
-        else begin
-            // Passthrough to other PEs
-            next_a_q      <= next_a_n;
-            next_b_q      <= next_b_n;
-
-            // Internal partial results
-            part_result_q <= part_result_n;
-
-        end
-    end
-
-    //-----------------------
-    // MAC Operation
-    //-----------------------
-    always_comb begin 
-        part_result_n.data = (part_result_q.data & {DATA_WIDTH{!part_result_q.last}}) + (a_data_i.data * b_data_i.data);
-        part_result_n.last = (a_data_i.last && b_data_i.last);
+    always_comb begin : DRAIN_CHANNEL
+        drain_o.data   = result_q;
+        drain_o.enable = emit_q;
     end
 
 endmodule
