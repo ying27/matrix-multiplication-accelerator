@@ -4,11 +4,15 @@ export RTL_TOP=pe
 export DOCKER_NAME=compile
 
 echo "Creating compile container"
-docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG
+docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
 echo "Compiling verilog"
-docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "verilator -Wall -y ./src --cc $RTL_TOP"
+compile_cmd="verilator -Wall -y ./src --cc pe -f $REPOROOT/tools/conf/incdir.f --exe $TBROOT/${RTL_TOP}_tb/$RTL_TOP.cpp"
+echo $compile_cmd
+docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
 echo "Compiling C"
-docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "make -j -C obj_dir -f V$RTL_TOP.mk"
+compile_cmd="make -j -C obj_dir -f V$RTL_TOP.mk V$RTL_TOP"
+echo $compile_cmd
+docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
 echo "Removing container"
 docker stop $DOCKER_NAME > /dev/null
 docker rm $DOCKER_NAME > /dev/null

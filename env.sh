@@ -8,6 +8,7 @@ fi
 
 export PATH="$REPOROOT/tools/scripts:$PATH"
 export RTLROOT="$REPOROOT/src"
+export TBROOT="$REPOROOT/tb"
 export DOCKERTAG="jsola/verilator:latest"
 if [[ "$(docker images -q $DOCKERTAG 2> /dev/null)" == "" ]]; then
     docker pull $DOCKERTAG
