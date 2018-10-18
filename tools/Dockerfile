@@ -20,6 +20,6 @@ RUN make -j $(nproc)
 RUN make install -j $(nproc)
 WORKDIR /tmp
 RUN rm -rf verilator 
-ENV VERILATOR_ROOT /usr/local/bin
-ENV PATH $VERILATOR_ROOT/bin:$PATH 
+#ENV VERILATOR_ROOT /usr/local/share/verilator
+ENV PATH /usr/local/bin:$PATH 
 ENV SHELL /bin/bash
