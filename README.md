@@ -14,3 +14,14 @@ cd matrix-multiplication-accelerator
 source env.sh
 ```
 
+## Compilation
+
+For the moment in order to compile, we can do so using:
+
+```
+verilator -Wall -y ./src --cc pe
+```
+
+```diff
+- Warning: The code does not compile yet
+```
