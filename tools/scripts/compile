@@ -1,0 +1,15 @@
+#!/bin/bash
+
+export RTL_TOP=pe
+export DOCKER_NAME=compile
+
+echo "Creating compile container"
+docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG
+echo "Compiling verilog"
+docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "verilator -Wall -y ./src --cc $RTL_TOP"
+echo "Compiling C"
+docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "make -j -C obj_dir -f V$RTL_TOP.mk"
+echo "Removing container"
+docker stop $DOCKER_NAME > /dev/null
+docker rm $DOCKER_NAME > /dev/null
+
