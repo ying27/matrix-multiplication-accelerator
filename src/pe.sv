@@ -10,7 +10,7 @@
 //                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////
 
-include "common.svh";
+`include "common.svh";
 import common_pkg::*;
 
 module pe (
