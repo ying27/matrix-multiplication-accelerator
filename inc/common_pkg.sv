@@ -39,7 +39,7 @@ package common_pkg;
     // --------------------
     // Control Commands
     // --------------------
-    typedef enum cmd_t { MMUL_D, MMUL_ND };
+    typedef enum { MMUL_D, MMUL_ND } cmd_t;
     typedef struct packed {
         logic compute_req;
         logic drain_en;
