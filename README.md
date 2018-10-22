@@ -16,12 +16,8 @@ source env.sh
 
 ## Compilation
 
-For the moment in order to compile, we can do so using:
+For the moment in order to compile, we can do so using the following command:
 
 ```
-verilator -Wall -y ./src --cc pe
-```
-
-```diff
-- Warning: The code does not compile yet
+compile
 ```
