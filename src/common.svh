@@ -1,4 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////////
+//                                                                                  //
 //    TITLE:          Common macros definitions                                     //
 //                                                                                  //
 //    PROJECT:        Processor Design (PD) - MIRI UPC                              //
@@ -6,11 +7,32 @@
 //    AUTHORS:        Ying hao Xu - yinghao.xu27@gmail.com                          //
 //                    Jordi Solà  - jsmont.sol@gmail.com                            //
 //                                                                                  //
-//    REVISION:       0.1 - Flipflop macro with reset support definition            //
-//                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////
 
 `define FF_RESET(CLK, RESET, DATA_I, DATA_O, DEFAULT) \
     always_ff @ (posedge CLK) \
         if (RESET) DATA_O <= DEFAULT; \
         else       DATA_O <= DATA_I;
+
+`define FF_EN(CLK, RESET, EN, DATA_I, DATA_O, DEFAULT) \
+    always_ff @ (posedge CLK) \
+        if (EN) DATA_O <= DATA_I;
+
+`define FF_RESET_EN(CLK, RESET, EN, DATA_I, DATA_O, DEFAULT) \
+    always_ff @ (posedge CLK) \
+        if (RESET) DATA_O <= DEFAULT; \
+        else if (EN) DATA_O <= DATA_I;
+
+`define DELAY_ARRAY(CLK, RESET, SIZE, DATA_TYPE, ARRAY_DATA_I, ARRAY_DATA_O) \
+    for (genvar gv_i=0; gv_i < SIZE; gv_i++) begin \
+        if (gv_i == 0) begin\
+            assign ARRAY_DATA_O[0] = (RESET == 1'b1) ? '0 : ARRAY_DATA_I[0];\
+        end\
+        else begin\
+            DATA_TYPE delayer [gv_i:0];\
+            for (genvar gv_j=0; gv_j < gv_i; gv_j++)\
+                 `FF_RESET(CLK, RESET, delayer[gv_j], delayer[gv_j+1], '0)\
+            assign delayer[0] = ARRAY_DATA_I[gv_i];\
+            assign ARRAY_DATA_O[gv_i] = delayer[gv_i];\
+        end\
+    end

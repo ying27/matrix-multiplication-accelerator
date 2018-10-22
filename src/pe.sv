@@ -10,8 +10,8 @@
 //                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////
 
-`include "common.svh";
-`include "common_pkg.sv";
+`include "common.svh"
+`include "common_pkg.sv"
 import common_pkg::*;
 
 

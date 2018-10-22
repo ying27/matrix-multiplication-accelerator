@@ -16,7 +16,12 @@ package common_pkg;
     // Global Config
     // --------------------
     localparam DATA_WIDTH = 8;
+    localparam SYS_ARRAY_SIZE = 2;
+    localparam ADDR_WIDTH = 64;
+    localparam T_D = 2*SYS_ARRAY_SIZE;
+    localparam T_C = SYS_ARRAY_SIZE;
     typedef logic[DATA_WIDTH-1:0] data_t;
+    typedef logic[ADDR_WIDTH-1:0] addr_t;
 
     // --------------------
     // PE data struct
@@ -30,5 +35,24 @@ package common_pkg;
         data_t data;
         logic  enable;
     } drain_data_t;
+
+    // --------------------
+    // Control Commands
+    // --------------------
+    typedef enum cmd_t { MMUL_D, MMUL_ND };
+    typedef struct packed {
+        logic compute_req;
+        logic drain_en;
+        logic a_addr;
+        logic b_addr;
+        logic c_addr;
+    } ctrl_t;
+    
+    // --------------------
+    // Memory data struct
+    // --------------------
+    localparam COUNT_WIDTH = $clog2(T_C);
+    typedef logic[COUNT_WIDTH-1:0] mcount_t;
+    
 
 endpackage
