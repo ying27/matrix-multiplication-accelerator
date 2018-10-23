@@ -23,13 +23,13 @@
         if (RESET) DATA_O <= DEFAULT; \
         else if (EN) DATA_O <= DATA_I;
 
-`define DELAY_ARRAY(CLK, RESET, SIZE, DATA_TYPE, ARRAY_DATA_I, ARRAY_DATA_O) \
+`define DELAY_ARRAY(CLK, RESET, SIZE, ARRAY_DATA_I, ARRAY_DATA_O) \
     for (genvar gv_i=0; gv_i < SIZE; gv_i++) begin \
         if (gv_i == 0) begin\
             assign ARRAY_DATA_O[0] = (RESET == 1'b1) ? '0 : ARRAY_DATA_I[0];\
         end\
         else begin\
-            DATA_TYPE delayer [gv_i:0];\
+            logic [$bits(ARRAY_DATA_I[0])-1:0] delayer [gv_i:0];\
             for (genvar gv_j=0; gv_j < gv_i; gv_j++)\
                  `FF_RESET(CLK, RESET, delayer[gv_j], delayer[gv_j+1], '0)\
             assign delayer[0] = ARRAY_DATA_I[gv_i];\
