@@ -1,0 +1,28 @@
+#!/bin/bash
+
+export DOCKER_NAME=run
+export TARGET=$1
+shift
+
+while [ $# -ne 0 ]
+do
+    arg="$1"
+    case "$arg" in
+        -trace)
+            EXTRA_VERILATOR_ARGS+=--trace
+            TRACE=1
+            ;;
+    esac
+    shift
+done
+
+echo "Creating run container"
+docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
+echo "Running Verilog"
+run_cmd="$REPOROOT/obj_dir/$TARGET"
+echo $run_cmd
+docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$run_cmd"
+echo "Removing container"
+docker stop $DOCKER_NAME > /dev/null
+docker rm $DOCKER_NAME > /dev/null
+

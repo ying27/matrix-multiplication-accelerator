@@ -3,7 +3,7 @@ FROM debian:stretch
 WORKDIR /tmp
 RUN apt-get -y update
 RUN apt-get -y install apt-utils
-RUN apt-get -y install bash build-essential git make autoconf perl gcc g++ flex bison   # First time prerequisites
+RUN apt-get -y install zlib1g-dev bash build-essential git make autoconf perl gcc g++ flex bison   # First time prerequisites
 RUN git clone http://git.veripool.org/git/verilator   # Only first time
 
 # Each build:
@@ -21,5 +21,6 @@ RUN make install -j $(nproc)
 WORKDIR /tmp
 RUN rm -rf verilator 
 #ENV VERILATOR_ROOT /usr/local/share/verilator
+RUN apt-get -y install gtkwave
 ENV PATH /usr/local/bin:$PATH 
 ENV SHELL /bin/bash

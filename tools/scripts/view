@@ -1,0 +1,8 @@
+#!/bin/bash
+
+open -a XQuartz
+export IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
+/usr/X11/bin/xhost + $IP
+docker run -w $REPOROOT -v $REPOROOT:$REPOROOT --rm --name=viewer -e DISPLAY=$IP:0 -v /tmp/.X11-unix:/tmp/.X11-unix  jsola/verilator gtkwave $1
+/usr/X11/bin/xhost - $IP
+osascript -e 'quit app "XQuartz"'
