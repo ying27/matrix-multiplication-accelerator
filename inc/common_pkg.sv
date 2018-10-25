@@ -9,6 +9,8 @@
 //    REVISION:       0.1 - Common basic data types and data length                 //
 //                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////
+`ifndef __COMMON_PKG__
+`define __COMMON_PKG__
 
 package common_pkg;
 
@@ -56,3 +58,5 @@ package common_pkg;
     
 
 endpackage
+
+`endif

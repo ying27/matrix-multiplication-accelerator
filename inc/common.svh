@@ -9,6 +9,9 @@
 //                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////
 
+`ifndef __COMMON__
+`define __COMMON__
+
 `define FF_RESET(CLK, RESET, DATA_I, DATA_O, DEFAULT) \
     always_ff @ (posedge CLK) \
         if (RESET) DATA_O <= DEFAULT; \
@@ -36,3 +39,5 @@
             assign ARRAY_DATA_O[gv_i] = delayer[gv_i];\
         end\
     end
+
+`endif
