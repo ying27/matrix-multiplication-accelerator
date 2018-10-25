@@ -4,7 +4,6 @@ export RTL_TOP=pe
 export DOCKER_NAME=compile
 
 export EXTRA_VERLIATOR_ARGS
-export TRACE=0;
 export CFLAGS;
 
 while [ $# -ne 0 ]
@@ -13,13 +12,12 @@ do
     case "$arg" in
         -top)
             RTL_TOP=$2
-            CFLAGS+="-DCXX_TOP_LEVEL=V$2"
+            CFLAGS+=\ -DCXX_TOP_LEVEL=V$2
             shift
             ;;
         -trace)
             EXTRA_VERILATOR_ARGS+=--trace-fst
-            CFLAGS+=-DTRACE
-            TRACE=1
+            CFLAGS+=\ -DTRACE
             ;;
     esac
     shift
