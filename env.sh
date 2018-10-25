@@ -15,4 +15,4 @@ if [[ "$(docker images -q $DOCKERTAG 2> /dev/null)" == "" ]]; then
 fi
 
 #alias verilator='docker run -w $REPOROOT -v $REPOROOT:$REPOROOT --name=tmp_container --rm $DOCKERTAG bash verilator'
-alias cleanup='for i in `find $REPOROOT -name build`; do ( rm -r $i ); done'
+alias cleanup='for i in `find $REPOROOT -name build`; do ( cd $i/..;  rm -r build ); done'
