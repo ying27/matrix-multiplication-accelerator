@@ -13,11 +13,12 @@ do
     case "$arg" in
         -top)
             RTL_TOP=$2
+            CFLAGS+="-DCXX_TOP_LEVEL=V$2"
             shift
             ;;
         -trace)
             EXTRA_VERILATOR_ARGS+=--trace-fst
-            CFLAGS=-DTRACE
+            CFLAGS+=-DTRACE
             TRACE=1
             ;;
     esac
@@ -31,7 +32,7 @@ echo "RTL_TOP: $RTL_TOP"
 echo "Creating compile container"
 docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
 echo "Compiling verilog"
-compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS -CFLAGS $CFLAGS --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $TBROOT/${RTL_TOP}/${RTL_TOP}.cpp"
+compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/main.cpp"
 echo $compile_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
 echo "Compiling C"

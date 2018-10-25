@@ -14,4 +14,5 @@ if [[ "$(docker images -q $DOCKERTAG 2> /dev/null)" == "" ]]; then
     docker pull $DOCKERTAG
 fi
 
-alias verilator='docker run -w $REPOROOT -v $REPOROOT:$REPOROOT --name=tmp_container --rm $DOCKERTAG bash verilator'
+#alias verilator='docker run -w $REPOROOT -v $REPOROOT:$REPOROOT --name=tmp_container --rm $DOCKERTAG bash verilator'
+alias cleanup='rm -rf $REPOROOT/obj_dir'

@@ -14,9 +14,12 @@ module pe_tb(
 
     matrix_data_t a_data_i;     
     matrix_data_t b_data_i;     
+
+    /* verilator lint_off UNUSED */
     matrix_data_t a_data_o;
     matrix_data_t b_data_o;
     drain_data_t  drain_o;
+    /* verilator lint_on UNUSED */
 
     initial begin
         a_data_i = '0;
