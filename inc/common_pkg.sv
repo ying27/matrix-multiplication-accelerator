@@ -19,7 +19,7 @@ package common_pkg;
     // --------------------
     localparam DATA_WIDTH = 8;
     localparam SYS_ARRAY_SIZE = 2;
-    localparam DRAIN_CHANNEL_SIZE = $ceil(SYS_ARRAY_SIZE/2);
+    localparam DRAIN_CHANNEL_SIZE = (SYS_ARRAY_SIZE/2) + (SYS_ARRAY_SIZE%2);
     localparam ADDR_WIDTH = 64;
     localparam T_D = 2*SYS_ARRAY_SIZE;
     localparam T_C = SYS_ARRAY_SIZE;
