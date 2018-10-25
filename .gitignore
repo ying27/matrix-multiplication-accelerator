@@ -4,3 +4,4 @@ obj_dir/*
 *.fst
 *.fst.*
 *.bak
+build/
