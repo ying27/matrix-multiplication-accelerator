@@ -23,18 +23,20 @@ do
     shift
 done
 
-export RTL_TARGET=$RTL_TOP
+export TARGET_PATH=$TBROOT/$RTL_TOP/build
 
 echo "RTL_TOP: $RTL_TOP"
 
+echo "Cleaning last build"
+rm -rf $TARGET_PATH
 echo "Creating compile container"
 docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
 echo "Compiling verilog"
-compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/main.cpp"
+compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS --Mdir $TARGET_PATH -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/main.cpp"
 echo $compile_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
 echo "Compiling C"
-compile_cmd="OPT=-DVL_DEBUG make -j -C obj_dir -f V$RTL_TOP.mk V$RTL_TOP"
+compile_cmd="OPT=-DVL_DEBUG make -j -C $TARGET_PATH -f V$RTL_TOP.mk V$RTL_TOP"
 echo $compile_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
 echo "Removing container"

@@ -2,10 +2,14 @@
 
 export DOCKER_NAME=run
 
+export RTL_TOP=$1
+shift
+export TARGET_PATH=$TBROOT/$RTL_TOP/build
+
 echo "Creating run container"
 docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
 echo "Running Verilog"
-run_cmd="$REPOROOT/obj_dir/$*"
+run_cmd="$TARGET_PATH/V$RTL_TOP $*"
 echo $run_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$run_cmd"
 echo "Removing container"
