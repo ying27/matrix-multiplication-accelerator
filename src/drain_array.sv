@@ -20,11 +20,11 @@ import common_pkg::*;
 module drain_array # (
     parameter SIZE = 2
 )(
-    input                              CLK,
-    input                              RESET,
-    input                              CTRL_I,
-    input  data_t           [SIZE-1:0] ARRAY_DATA_I,
-    output data_t [SYS_ARRAY_SIZE-1:0] ARRAY_DATA_O
+    input                              clk_i,
+    input                              rst_i,
+    input                              ctrl_i,
+    input  data_t           [SIZE-1:0] array_data_i,
+    output data_t [SYS_ARRAY_SIZE-1:0] array_data_o
 );
 
     typedef struct packed {
@@ -35,22 +35,22 @@ module drain_array # (
     pair_data_t drain_pairs_i [SIZE-1:0];
     pair_data_t drain_pairs_o [SIZE-1:0];
     for (genvar gv_z=0; gv_z < SIZE; gv_z++) begin
-        `FF_RESET_EN(CLK, RESET,  CTRL_I, ARRAY_DATA_I[gv_z], drain_pairs_i[gv_z].l, '0)
+        `FF_RESET_EN(clk_i, rst_i,  ctrl_i, array_data_i[gv_z], drain_pairs_i[gv_z].l, '0)
         if (gv_z == SIZE-1) begin
             //For the last element, we do not have to store it into a FF
-            assign drain_pairs_i[gv_z].r = ARRAY_DATA_I[gv_z];
+            assign drain_pairs_i[gv_z].r = array_data_i[gv_z];
         end
         else begin
-            `FF_RESET_EN(CLK, RESET, ~CTRL_I, ARRAY_DATA_I[gv_z], drain_pairs_i[gv_z].r, '0)
+            `FF_RESET_EN(clk_i, rst_i, ~ctrl_i, array_data_i[gv_z], drain_pairs_i[gv_z].r, '0)
         end
     end
 
-    `REVERSE_DELAY_ARRAY(CLK, RESET, CTRL_I, SIZE, drain_pairs_i, drain_pairs_o)
+    `REVERSE_DELAY_ARRAY(clk_i, rst_i, ctrl_i, SIZE, drain_pairs_i, drain_pairs_o)
 
     for (genvar gv_z=0; gv_z < SIZE; gv_z++) begin
-        assign ARRAY_DATA_O[ 2*gv_z   ] = drain_pairs_o[gv_z].l;
+        assign array_data_o[ 2*gv_z   ] = drain_pairs_o[gv_z].l;
         if ((2*gv_z) < (SYS_ARRAY_SIZE-1)) begin
-            assign ARRAY_DATA_O[(2*gv_z)+1] = drain_pairs_o[gv_z].r;
+            assign array_data_o[(2*gv_z)+1] = drain_pairs_o[gv_z].r;
         end
     end
 
