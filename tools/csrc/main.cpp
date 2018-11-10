@@ -1,16 +1,8 @@
 #include "verilated.h"
 #include <iostream>
+using namespace std;
 #include "verilated_fst_c.h"
 #include <getopt.h>
-#include <fstream>
-#include <sstream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <cctype>
-#include <locale>
-using namespace std;
-
 
 #define PATH_LENGTH 1000
 
@@ -20,43 +12,21 @@ using namespace std;
 
 #include topModuleInc
 
-// trim from start (in place)
-static inline void ltrim(string &s) {
-    s.erase(s.begin(), find_if(s.begin(), s.end(), [](int ch) {
-        return !isspace(ch);
-    }));
-}
-
-// trim from end (in place)
-static inline void rtrim(string &s) {
-    s.erase(find_if(s.rbegin(), s.rend(), [](int ch) {
-        return !isspace(ch);
-    }).base(), s.end());
-}
-
-// trim from both ends (in place)
-static inline void trim(string &s) {
-    ltrim(s);
-    rtrim(s);
-}
-
 void usage(char* name) {
     cerr << "Usage: " << name << " [--trace traceFile.fst] [--timeout timeout] [--help]"<<endl;
     cerr << "\tTrace: off by default" << endl << "\tTimeout: default 1" << endl;
     exit(EXIT_FAILURE);
 }
 
-void getArgs(int argc, char* argv[], uint64_t &timeout, bool &trace, char* traceFile, bool& signals, char* signalFile){
+void getArgs(int argc, char* argv[], uint64_t &timeout, bool &trace, char* traceFile){
 
     trace = false;
     timeout = 1;
-    signals = false;
 
     struct option argOptions[] = {
         { "trace", required_argument, 0, 1},
         { "timeout", required_argument, 0, 2},
-        { "signals", required_argument, 0, 3},
-        { "help", no_argument, 0, 4}
+        { "help", no_argument, 0, 3}
     };
 
     int idx;
@@ -69,30 +39,10 @@ void getArgs(int argc, char* argv[], uint64_t &timeout, bool &trace, char* trace
             case 2:
                 timeout = strtol(optarg, NULL, 0);
                 break;
-            case 3:
-                signals = true;
-                strncpy(signalFile, optarg, PATH_LENGTH);
-                break;
             default:
                 usage(argv[0]);
         }
     }
-}
-
-vector<string> getSignalNames(stringstream &file){
-    string headerstring;
-    vector<string> headers = vector<string>();
-    if(getline(file, headerstring, '\n')){
-        stringstream header_stream(headerstring);
-
-        string header;
-        while(getline(header_stream, header, ',')){
-            trim(header);
-            headers.push_back(header);
-        }
-
-    }
-    return headers;
 }
 
 int main(int argc, char** argv, char** env) {
@@ -101,22 +51,9 @@ int main(int argc, char** argv, char** env) {
 
     bool trace;
     char traceFile[PATH_LENGTH];
-    bool signals;
-    char signalFile[PATH_LENGTH];
     uint64_t timeout;
 
-    getArgs(argc, argv, timeout, trace, traceFile, signals, signalFile);
-
-    stringstream signalData;
-    vector<string> signalNames;
-
-    if(signals) {
-        ifstream signal_file(signalFile);
-        signalData << signal_file.rdbuf();
-        signal_file.close();
-        signalNames = getSignalNames(signalData);
-        for(int i=0; i < signalNames.size(); ++i) cout << "Signal name: "  << signalNames[i] << endl;
-    }
+    getArgs(argc, argv, timeout, trace, traceFile);
 
     CXX_TOP_LEVEL* top = new CXX_TOP_LEVEL ();
 
