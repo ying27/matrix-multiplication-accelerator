@@ -1,0 +1,9 @@
+#!/bin/bash
+
+for i in `find $REPOROOT -name build`; 
+do 
+( 
+    cd $i/..;
+    rm -r build
+); 
+done
