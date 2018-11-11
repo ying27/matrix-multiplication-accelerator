@@ -1,0 +1,40 @@
+[*]
+[*] GTKWave Analyzer v3.3.79 (w)1999-2017 BSI
+[*] Sun Nov 11 22:33:56 2018
+[*]
+[dumpfile] "/Users/j/projects/matrix-multiplication-accelerator/tb/array_wrap_tb/build/test.fst"
+[dumpfile_mtime] "Sun Nov 11 22:32:20 2018"
+[dumpfile_size] 6109
+[savefile] "/Users/j/projects/matrix-multiplication-accelerator/top_level_view.gtkw"
+[timestart] 0
+[size] 1280 755
+[pos] -21 -21
+*-6.472291 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.array_wrap_tb.
+[sst_width] 210
+[signals_width] 102
+[sst_expanded] 1
+[sst_vpaned_height] 209
+@28
+TOP.array_wrap_tb.clk
+@22
+TOP.array_wrap_tb.a(0)[7:0]
+TOP.array_wrap_tb.a(1)[7:0]
+TOP.array_wrap_tb.a(2)[7:0]
+TOP.array_wrap_tb.a(3)[7:0]
+TOP.array_wrap_tb.b(0)[7:0]
+TOP.array_wrap_tb.b(1)[7:0]
+TOP.array_wrap_tb.b(2)[7:0]
+TOP.array_wrap_tb.b(3)[7:0]
+@28
+TOP.array_wrap_tb.last
+TOP.array_wrap_tb.ctrl
+@22
+TOP.array_wrap_tb.c(0)[7:0]
+TOP.array_wrap_tb.c(1)[7:0]
+TOP.array_wrap_tb.c(2)[7:0]
+@23
+TOP.array_wrap_tb.c(3)[7:0]
+[pattern_trace] 1
+[pattern_trace] 0

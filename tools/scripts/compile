@@ -1,44 +1,66 @@
 #!/bin/bash
 
-export RTL_TOP=pe
+#Variable specification
+export RTL_TOP
 export DOCKER_NAME=compile
-
 export EXTRA_VERLIATOR_ARGS
 export CFLAGS
+export HAS_TEST=false
+export TESTNAME
 
+#Detect arguments
 while [ $# -ne 0 ]
 do
     arg="$1"
     case "$arg" in
-        -top)
+        -top) #TB path
             RTL_TOP=$2
             CFLAGS+=\ -DCXX_TOP_LEVEL=V$2
             shift
             ;;
-        -trace)
-            EXTRA_VERILATOR_ARGS+=--trace-fst
+        -trace)#Trace or not
+            EXTRA_VERILATOR_ARGS+=--trace-fst\ --trace-structs
             CFLAGS+=\ -DTRACE
+            ;;
+        -test)#Testpath
+            TESTNAME=$2
+            HAS_TEST=true
+            shift
             ;;
     esac
     shift
 done
 
 export TARGET_PATH=$TBROOT/$RTL_TOP/build
-
 echo "RTL_TOP: $RTL_TOP"
 
+#Clean
 echo "Cleaning last build"
 rm -rf $TARGET_PATH
+
+#Docker container creation
 echo "Creating compile container"
 docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
+
+#Verilog compilation
 echo "Compiling verilog"
 compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS --Mdir $TARGET_PATH -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/*.cpp"
 echo $compile_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
+
+#C Compilation
 echo "Compiling C"
 compile_cmd="OPT=-DVL_DEBUG make -j -C $TARGET_PATH -f V$RTL_TOP.mk V$RTL_TOP"
 echo $compile_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
+
+#Include test if necessary
+if $HAS_TEST; then
+    echo "Linking target test: $TESTNAME"
+    ln -s $TBROOT/$RTL_TOP/test/$TESTNAME/* $TARGET_PATH
+fi
+
+#Cleaning the environment
 echo "Removing container"
 docker stop $DOCKER_NAME > /dev/null
 docker rm $DOCKER_NAME > /dev/null

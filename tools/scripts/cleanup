@@ -7,3 +7,4 @@ do
     rm -r build
 ); 
 done
+rm -rf $REPOROOT/last_run
