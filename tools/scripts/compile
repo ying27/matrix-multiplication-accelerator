@@ -4,7 +4,7 @@ export RTL_TOP=pe
 export DOCKER_NAME=compile
 
 export EXTRA_VERLIATOR_ARGS
-export CFLAGS;
+export CFLAGS
 
 while [ $# -ne 0 ]
 do
@@ -32,7 +32,7 @@ rm -rf $TARGET_PATH
 echo "Creating compile container"
 docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
 echo "Compiling verilog"
-compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS --Mdir $TARGET_PATH -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/main.cpp"
+compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS --Mdir $TARGET_PATH -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/*.cpp"
 echo $compile_cmd
 docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
 echo "Compiling C"
