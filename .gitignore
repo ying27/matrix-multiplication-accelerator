@@ -5,3 +5,4 @@ obj_dir/*
 *.fst.*
 *.bak
 build/
+last_run

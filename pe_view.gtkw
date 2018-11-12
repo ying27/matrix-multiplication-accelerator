@@ -1,0 +1,61 @@
+[*]
+[*] GTKWave Analyzer v3.3.95 (w)1999-2018 BSI
+[*] Mon Nov 12 17:49:39 2018
+[*]
+[dumpfile] "/Users/j/projects/matrix-multiplication-accelerator/tb/array_wrap_tb/build/test.fst"
+[dumpfile_mtime] "Mon Nov 12 16:42:32 2018"
+[dumpfile_size] 6245
+[savefile] "/Users/j/projects/matrix-multiplication-accelerator/pe_view.gtkw"
+[timestart] 0
+[size] 1280 489
+[pos] -1 -1
+*-2.988822 0 5 13 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.array_wrap_tb.
+[treeopen] TOP.array_wrap_tb.dut.
+[treeopen] TOP.array_wrap_tb.dut.i_systolic_array.
+[treeopen] TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].
+[treeopen] TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].
+[treeopen] TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.
+[sst_width] 193
+[signals_width] 128
+[sst_expanded] 1
+[sst_vpaned_height] 165
+@28
+TOP.array_wrap_tb.clk
+@200
+-Input A
+@22
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.a_data_i.data[7:0]
+@28
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.a_data_i.last
+@200
+-Output A
+@22
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.a_data_o.data[7:0]
+@28
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.a_data_o.last
+@200
+-Input B
+@22
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.b_data_i.data[7:0]
+@28
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.b_data_i.last
+@200
+-Output B
+@22
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.b_data_o.data[7:0]
+@28
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.b_data_o.last
+@200
+-Partial
+@22
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.result_n[7:0]
+@200
+-Output drain
+@22
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.drain_o.data[7:0]
+@28
+TOP.array_wrap_tb.dut.i_systolic_array.ROWS[0].COLUMNS[0].i_pe.drain_o.enable
+[pattern_trace] 1
+[pattern_trace] 0
