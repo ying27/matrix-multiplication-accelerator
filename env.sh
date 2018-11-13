@@ -1,5 +1,5 @@
 #Detect the path to the top of the repo from which we are calling the script
-export REPOROOT=$( cd $(dirname "$0"); pwd -P)
+export REPOROOT=$( cd $(dirname "$1"); pwd -P)
 
 #Add our scripts to the path
 if [ -z ${OLD_PATH+x} ]; then

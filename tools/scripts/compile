@@ -40,19 +40,19 @@ rm -rf $TARGET_PATH
 
 #Docker container creation
 echo "Creating compile container"
-docker run -w $REPOROOT -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
+docker run -w $REPOROOT --user $(id -u $(whoami)) -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
 
 #Verilog compilation
 echo "Compiling verilog"
 compile_cmd="verilator -Wall $EXTRA_VERILATOR_ARGS --Mdir $TARGET_PATH -CFLAGS \"$CFLAGS\" --cc $RTL_TOP -f $REPOROOT/tools/conf/incdir.f -y $TBROOT/$RTL_TOP --exe $REPOROOT/tools/csrc/*.cpp"
 echo $compile_cmd
-docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
+docker exec -t $DOCKER_NAME bash -c "$compile_cmd"
 
 #C Compilation
 echo "Compiling C"
 compile_cmd="OPT=-DVL_DEBUG make -j -C $TARGET_PATH -f V$RTL_TOP.mk V$RTL_TOP"
 echo $compile_cmd
-docker exec -t -w $REPOROOT $DOCKER_NAME bash -c "$compile_cmd"
+docker exec -t $DOCKER_NAME bash -c "$compile_cmd"
 
 #Include test if necessary
 if $HAS_TEST; then
