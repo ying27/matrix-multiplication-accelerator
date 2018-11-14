@@ -42,10 +42,10 @@ module systolic_array (
             pe i_pe (
                 .clk_i    ( clk_i             ),
                 .rst_i    ( rst_i             ),
-                .a_data_i ( a_wires[i  ][j]   ),     
-                .b_data_i ( b_wires[j  ][i]   ),     
-                .a_data_o ( a_wires[i+1][j]   ),
-                .b_data_o ( b_wires[j+1][i]   ),
+                .a_data_i ( a_wires[j  ][i]   ),
+                .b_data_i ( b_wires[i  ][j]   ),
+                .a_data_o ( a_wires[j+1][i]   ),
+                .b_data_o ( b_wires[i+1][j]   ),
                 .drain_o  ( drain_wires[i][j] )
             );
         end
