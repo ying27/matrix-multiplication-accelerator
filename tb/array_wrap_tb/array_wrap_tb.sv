@@ -15,7 +15,7 @@ module array_wrap_tb (
 
 
     //Variable initialization
-    logic ctrl, last, read_last;
+    logic last, read_last;
 
     data_t [SYS_ARRAY_SIZE-1:0] a, b;
 
@@ -56,25 +56,9 @@ module array_wrap_tb (
 
     end
 
-    int ctrl_counter, next_ctrl_counter;
-    `FF_RESET(clk, reset, next_ctrl_counter, ctrl_counter, '0);
-
-    always_comb begin
-
-        next_ctrl_counter = ctrl_counter > 0? ctrl_counter - 1: 0;
-
-        if(last) begin
-            next_ctrl_counter = 2*SYS_ARRAY_SIZE + 2;
-        end
-    end
-
-    assign ctrl = ctrl_counter[0];
-
-
     systolic_array_wrap dut(
         .clk_i  ( clk   ),
         .rst_i  ( reset ),
-        .ctrl_i ( ctrl  ),
         .last_i ( last  ),
         .a      ( a     ),
         .b      ( b     ),
