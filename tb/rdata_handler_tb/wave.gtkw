@@ -1,0 +1,48 @@
+[*]
+[*] GTKWave Analyzer v3.3.66 (w)1999-2015 BSI
+[*] Thu Nov 29 23:38:22 2018
+[*]
+[dumpfile] "/home/yxu/tmp/pd/matrix-multiplication-accelerator/tb/rdata_handler_tb/build/test.fst"
+[dumpfile_mtime] "Thu Nov 29 23:37:06 2018"
+[dumpfile_size] 1289
+[savefile] "/home/yxu/tmp/pd/matrix-multiplication-accelerator/tb/rdata_handler_tb/wave.gtkw"
+[timestart] 0
+[size] 2493 1025
+[pos] -29 -29
+*-3.009984 17 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.rdata_handler_tb.
+[sst_width] 240
+[signals_width] 189
+[sst_expanded] 1
+[sst_vpaned_height] 300
+@28
+TOP.clk
+TOP.reset
+@24
+TOP.rdata_handler_tb.i_rdata_handler.current[31:0]
+@200
+-
+@28
+TOP.rdata_handler_tb.i_rdata_handler.valid_i
+TOP.rdata_handler_tb.i_rdata_handler.we_i
+@201
+-
+@22
+TOP.rdata_handler_tb.i_rdata_handler.a_o(0)[7:0]
+TOP.rdata_handler_tb.i_rdata_handler.a_o(1)[7:0]
+TOP.rdata_handler_tb.i_rdata_handler.a_o(2)[7:0]
+TOP.rdata_handler_tb.i_rdata_handler.a_o(3)[7:0]
+@200
+-
+@22
+TOP.rdata_handler_tb.i_rdata_handler.b_o(0)[7:0]
+TOP.rdata_handler_tb.i_rdata_handler.b_o(1)[7:0]
+TOP.rdata_handler_tb.i_rdata_handler.b_o(2)[7:0]
+TOP.rdata_handler_tb.i_rdata_handler.b_o(3)[7:0]
+@200
+-
+@28
+TOP.rdata_handler_tb.i_rdata_handler.last_o
+[pattern_trace] 1
+[pattern_trace] 0

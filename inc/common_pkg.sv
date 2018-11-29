@@ -19,12 +19,16 @@ package common_pkg;
     // --------------------
     localparam DATA_WIDTH = 8;
     localparam SYS_ARRAY_SIZE = 4;
+    localparam ADDR_WIDTH = 10;
+
+    localparam ROW_BYTES = SYS_ARRAY_SIZE * (DATA_WIDTH/8);
+    localparam ROW_BITS = SYS_ARRAY_SIZE * DATA_WIDTH;
     localparam DRAIN_CHANNEL_SIZE = (SYS_ARRAY_SIZE/2) + (SYS_ARRAY_SIZE%2);
-    localparam ADDR_WIDTH = 64;
     localparam T_D = 2*SYS_ARRAY_SIZE;
     localparam T_C = SYS_ARRAY_SIZE;
     typedef logic[DATA_WIDTH-1:0] data_t;
     typedef logic[ADDR_WIDTH-1:0] addr_t;
+    typedef logic[31:0] countn_t;
 
     // --------------------
     // PE data struct
