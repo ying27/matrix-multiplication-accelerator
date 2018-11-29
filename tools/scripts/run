@@ -7,6 +7,7 @@ shift
 export TARGET_PATH=$TBROOT/$RTL_TOP/build
 
 echo "Creating test folder"
+rm -f $REPOROOT/last_run
 ln -s $TARGET_PATH $REPOROOT/last_run
 echo "Creating run container"
 docker run -w $REPOROOT --user $(id -u $(whoami)) -i -t -d -v $REPOROOT:$REPOROOT --name=$DOCKER_NAME $DOCKERTAG > /dev/null
