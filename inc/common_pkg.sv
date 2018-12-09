@@ -60,6 +60,46 @@ package common_pkg;
     localparam COUNT_WIDTH = $clog2(T_C);
     typedef logic[COUNT_WIDTH-1:0] mcount_t;
     
+    typedef enum [0:0]{
+        MMUL_D,
+        MMUL_ND
+    } instruction_code_t;
+
+    typedef struct packed{
+        instruction_code_t    op;
+        addr_t              src1;
+        addr_t              src2;
+        addr_t              dest;
+    } instruction_t;
+
+    typedef struct packed{
+        addr_t      addr;
+        logic       en;
+        logic[ROW_BITS-1:0] row;
+    } data_wire_t;
+
+    typedef struct packed{
+        logic       valid;
+        addr_t      src1;
+        addr_t      src2;
+        logic       drain;
+    } ctrl_fetch_t;
+
+    typedef struct packed{
+        logic       valid;
+        addr_t      dest;
+    } ctrl_commit_t;
+
+    typedef struct packed{
+        ctrl_fetch_t    fetch;
+        ctrl_commit_t   commit;
+    } ctrl_signals_t;
+
+    typedef struct packed{
+        data_t [SYS_ARRAY_SIZE-1:0]     a;
+        data_t [SYS_ARRAY_SIZE-1:0]     b;
+        logic                           last;
+    } systolic_feed_t;
 
 endpackage
 

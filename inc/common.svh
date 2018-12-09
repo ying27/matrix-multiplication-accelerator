@@ -12,6 +12,9 @@
 `ifndef __COMMON__
 `define __COMMON__
 
+    `define Y 1'b1
+    `define N 1'b0
+
 `define FF_RESET(CLK, RESET, DATA_I, DATA_O, DEFAULT) \
     always_ff @ (posedge CLK) \
         if (RESET) DATA_O <= DEFAULT; \
@@ -50,5 +53,30 @@
         assign ARRAY_DATA_O[gv_r] = delayed[(SIZE-1)-gv_r];\
     end\
     `DELAY_ARRAY(CLK, RESET, EN, SIZE, reversed, delayed)
+
+`define FF_RESET_PIPE(CLK, RST, STAGES, IN, OUT, INITVAL) \
+        generate  \
+            if (STAGES==0) \
+            begin\
+                assign OUT = IN; \
+            end \
+            else if (STAGES==1) \
+            begin\
+                `FF_RESET(CLK, RST, IN, OUT, INITVAL) \
+            end \
+            else \
+            begin\
+                logic [STAGES-1:0][$bits(IN)-1:0] delayed; \
+                always_ff@(posedge CLK) begin \
+                    if (RST) begin \
+                        for (int i = 0 ; i < STAGES; i++) delayed[i] <= INITVAL; \
+                    end else begin \
+                        for (int i = 1 ; i < STAGES; i++) delayed[i] <= delayed[i-1]; \
+                        delayed[0] <= IN; \
+                    end \
+                    OUT <= delayed[ STAGES - 1]; \
+                end \
+            end // else: !if(STAGES==1)  \
+        endgenerate
 
 `endif

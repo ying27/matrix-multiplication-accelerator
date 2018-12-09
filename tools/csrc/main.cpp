@@ -85,15 +85,17 @@ int main(int argc, char** argv, char** env) {
 #ifdef TRACE
         if(trace) tfp->dump (main_time);
 #endif
+        if(!Verilated::gotFinish()){
 
-        main_time += 1;
-        top->reset = 0;
-        top->clk = 0;
-        top->eval();
+            main_time += 1;
+            top->reset = 0;
+            top->clk = 0;
+            top->eval();
 
 #ifdef TRACE
-        if(trace) tfp->dump (main_time);
+            if(trace) tfp->dump (main_time);
 #endif
+        }
     }
 
     if(main_time >= timeout) cout << "ERROR: timeout" << endl;
