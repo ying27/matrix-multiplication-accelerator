@@ -22,23 +22,25 @@ module instruction_queue(
 
     integer count;
 
-    string tmp_opcode;
+    logic [50:1] tmp_opcode;
     addr_t tmp_src1;
     addr_t tmp_src2;
     addr_t tmp_dest;
 
+    logic finish_sequence=0;
+    int finish_counter;
+    `FF_RESET_EN( clk, reset, finish_sequence, finish_counter-1, finish_counter, 2*T_D);
+    always_comb if(reset == 0 && finish_counter == 0) $finish;
+
     always_ff @(posedge clk) begin
         if(ready || !valid) begin
             if($feof(file)) begin
-                $display("Input ended");
-                $finish;
+                if(!finish_sequence) $display("Input ended");
+                finish_sequence<=1;
             end
             else begin
-                count <= $fscanf(file, "%b", valid);
-                count <= $fscanf(file, "%s", tmp_opcode);
-                count <= $fscanf(file, "%x", tmp_dest);
-                count <= $fscanf(file, "%x", tmp_src1);
-                count <= $fscanf(file, "%x", tmp_src2);
+                count = $fscanf(file, "%b %s %x %x %x\n", valid, tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
+                $display(count);
             end
         end
     end
@@ -47,4 +49,8 @@ module instruction_queue(
     assign inst.src2 = tmp_src2;
     assign inst.dest = tmp_dest;
 
+    always_ff @(posedge clk) begin
+        $display("Valid: %b  Opcode: %0s Dest: %x Src1: %x Src2: %x\n", valid, tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
+        if(valid && ready) $display("Instruction: 0x%x", inst);
+    end
 endmodule

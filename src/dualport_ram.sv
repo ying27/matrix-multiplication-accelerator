@@ -39,6 +39,9 @@ module dualport_ram (
     logic [ADDR_WIDTH-1-lwidth:0] addr_a = addr_a_i[ADDR_WIDTH-1:lwidth];
     logic [ADDR_WIDTH-1-lwidth:0] addr_b = addr_b_i[ADDR_WIDTH-1:lwidth];
     logic [ADDR_WIDTH-1-lwidth:0] addr_c = addr_c_i[ADDR_WIDTH-1:lwidth];
+    logic [ROW_BITS-1:0]     rdata_a;
+    logic [ROW_BITS-1:0]     rdata_b;
+    logic [ROW_BITS-1:0]     wdata_c;
 
     initial begin
         $readmemh("random.list", mem, 0);
@@ -47,12 +50,20 @@ module dualport_ram (
     always @(posedge clk_i) begin
 
         if (we_c_i == 1'b1) begin
-            mem[addr_c] <= wdata_c_i;
+            mem[addr_c] <= wdata_c;
         end
 
-        if (en_a_i) rdata_a_o <= mem[addr_a];
-        if (en_b_i) rdata_b_o <= mem[addr_b];
+        if (en_a_i) rdata_a <= mem[addr_a];
+        if (en_b_i) rdata_b <= mem[addr_b];
 
     end
+
+    //Fix endianness
+    generate for(genvar i=0; i < ROW_BYTES; i++) begin : ENDIANNESS
+        assign rdata_a_o[(8*(i+1))-1:8*i] = rdata_a[(8*(ROW_BYTES-i))-1:(8*(ROW_BYTES-i-1))];
+        assign rdata_b_o[(8*(i+1))-1:8*i] = rdata_b[(8*(ROW_BYTES-i))-1:(8*(ROW_BYTES-i-1))];
+        assign wdata_c[(8*(i+1))-1:8*i] = wdata_c_i[(8*(ROW_BYTES-i))-1:(8*(ROW_BYTES-i-1))];
+    end
+    endgenerate
 
 endmodule

@@ -42,7 +42,7 @@ module control(
             if(decoder_sigs.fetch.drain == 1) cycles_to_drain_next = T_D;
         end
 
-        assign stall_decode = (!decoder_sigs.fetch.drain && decoder_sigs.fetch.valid) || (cycles_to_drain == 0);
+        assign stall_decode = decoder_sigs.fetch.drain && decoder_sigs.fetch.valid && (cycles_to_drain != 0);
 
         //The output valids need to be updated according to the stall
         always_comb begin
