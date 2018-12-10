@@ -20,7 +20,9 @@ module instruction_queue(
         file = $fopen("code.s", "r");
     end
 
+    /* verilator lint_off UNUSED */
     integer count;
+    /* verilator lint_on UNUSED */
 
     logic [500:1] tmp_opcode;
     addr_t tmp_src1;

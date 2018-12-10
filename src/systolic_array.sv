@@ -26,8 +26,11 @@ module systolic_array (
     // -----------------------------
     // PE wires
     // -----------------------------
+    /* verilator lint_off UNUSED */
     matrix_data_t [SYS_ARRAY_SIZE:0][SYS_ARRAY_SIZE-1:0] a_wires;
     matrix_data_t [SYS_ARRAY_SIZE:0][SYS_ARRAY_SIZE-1:0] b_wires;
+    /* verilator lint_on UNUSED */
+
     drain_data_t  [SYS_ARRAY_SIZE-1:0][SYS_ARRAY_SIZE:0] drain_wires;
     
 
