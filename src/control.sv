@@ -31,18 +31,32 @@ module control(
 
     logic stall_decode;
 
-    generate begin: DRAIN_HAZARD_CONTROL
+    generate begin: HAZARD_CONTROL
         int cycles_to_drain;
         int cycles_to_drain_next;
         `FF_RESET( clk_i, rst_i, cycles_to_drain_next, cycles_to_drain, '0);
 
+        int cycles_to_issue;
+        int cycles_to_issue_next;
+        `FF_RESET( clk_i, rst_i, cycles_to_issue_next, cycles_to_issue, '0);
+
         always_comb begin
             cycles_to_drain_next = cycles_to_drain-1;
-            if(cycles_to_drain == 0) cycles_to_drain_next = 0;
-            if(decoder_sigs.fetch.drain == 1) cycles_to_drain_next = T_D;
+            if(cycles_to_drain == 0) begin
+                cycles_to_drain_next = 0;
+                if(!stall_decode &&  decoder_sigs.fetch.drain == 1) cycles_to_drain_next = T_D-1;
+            end
         end
 
-        assign stall_decode = decoder_sigs.fetch.drain && decoder_sigs.fetch.valid && (cycles_to_drain != 0);
+        always_comb begin
+            cycles_to_issue_next = cycles_to_issue-1;
+            if(cycles_to_issue == 0) begin
+                cycles_to_issue_next = 0;
+                if(!stall_decode && decoder_sigs.fetch.valid == 1) cycles_to_issue_next = SYS_ARRAY_SIZE-1;
+            end
+        end
+
+        assign stall_decode = (decoder_sigs.fetch.drain && decoder_sigs.fetch.valid && (cycles_to_drain != 0)) || (cycles_to_issue != 0);
 
         //The output valids need to be updated according to the stall
         always_comb begin

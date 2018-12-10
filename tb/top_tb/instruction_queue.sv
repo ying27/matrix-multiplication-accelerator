@@ -29,7 +29,7 @@ module instruction_queue(
 
     logic finish_sequence=0;
     int finish_counter;
-    `FF_RESET_EN( clk, reset, finish_sequence, finish_counter-1, finish_counter, 2*T_D);
+    `FF_RESET_EN( clk, reset, finish_sequence, finish_counter-1, finish_counter, 3*T_D);
     always_comb if(reset == 0 && finish_counter == 0) $finish;
 
     always_ff @(posedge clk) begin
@@ -39,7 +39,7 @@ module instruction_queue(
                 finish_sequence<=1;
             end
             else begin
-                count = $fscanf(file, "%b %s %x %x %x\n", valid, tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
+                count <= $fscanf(file, "%b %s %x %x %x\n", valid, tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
             end
         end
     end
