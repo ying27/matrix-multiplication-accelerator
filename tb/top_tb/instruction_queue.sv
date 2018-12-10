@@ -22,7 +22,7 @@ module instruction_queue(
 
     integer count;
 
-    logic [50:1] tmp_opcode;
+    logic [500:1] tmp_opcode;
     addr_t tmp_src1;
     addr_t tmp_src2;
     addr_t tmp_dest;
@@ -40,17 +40,20 @@ module instruction_queue(
             end
             else begin
                 count = $fscanf(file, "%b %s %x %x %x\n", valid, tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
-                $display(count);
             end
         end
     end
+    /* verilator lint_off WIDTH */
     assign inst.op = (tmp_opcode == "mmul_d")? MMUL_D : MMUL_ND;
+    /* verilator lint_on WIDTH */
     assign inst.src1 = tmp_src1;
     assign inst.src2 = tmp_src2;
     assign inst.dest = tmp_dest;
 
     always_ff @(posedge clk) begin
-        $display("Valid: %b  Opcode: %0s Dest: %x Src1: %x Src2: %x\n", valid, tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
-        if(valid && ready) $display("Instruction: 0x%x", inst);
+        if(valid && ready) begin
+            $display("Instruction: 0x%x", inst);
+            $display("Opcode: %0s Dest: %x Src1: %x Src2: %x\n", tmp_opcode, tmp_dest, tmp_src1, tmp_src2);
+        end
     end
 endmodule
