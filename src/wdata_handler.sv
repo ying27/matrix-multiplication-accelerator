@@ -41,7 +41,7 @@ module wdata_handler (
     //////////////////////////////////////////////////////
     // Moore FSM
     //////////////////////////////////////////////////////
-    typedef enum {IDLE, WRITE} state;
+    typedef enum {IDLE, WRITE, WAIT} state;
     state current, next;
 
     //State is changed at posedge
@@ -55,11 +55,15 @@ module wdata_handler (
         case (current)
 
             IDLE: begin
-                next = (valid_i == 1'b1) ? WRITE : IDLE;
+                next = (valid_i == 1'b1) ? WAIT : IDLE;
             end
 
             WRITE: begin
-                next = (ncount_c == 1) ?  IDLE : WRITE;
+                next = (ncount_c == 1) ?  IDLE : WAIT;
+            end
+
+            WAIT: begin
+                next = WRITE;
             end
 
         endcase
@@ -81,6 +85,12 @@ module wdata_handler (
                 en_c_o = 1'b1;
                 ncount_n = ncount_c - 1;
                 addr_c_n = addr_c_c + ROW_BYTES;
+            end
+
+            WAIT: begin
+                en_c_o = 1'b0;
+                ncount_n = ncount_c;
+                addr_c_n = addr_c_c;
             end
 
         endcase
