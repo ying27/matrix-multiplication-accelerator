@@ -1,0 +1,95 @@
+[*]
+[*] GTKWave Analyzer v3.3.95 (w)1999-2018 BSI
+[*] Mon Dec 10 22:39:55 2018
+[*]
+[dumpfile] "/Users/j/projects/matrix-multiplication-accelerator/tb/top_tb/build/test.fst"
+[dumpfile_mtime] "Mon Dec 10 22:39:19 2018"
+[dumpfile_size] 9533
+[savefile] "/Users/j/projects/matrix-multiplication-accelerator/tb/top_tb/profiles/memory_interfaces.gtkw"
+[timestart] 0
+[size] 1280 554
+[pos] -1 -1
+*-3.044306 40 5 11 23 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.top_tb.
+[treeopen] TOP.top_tb.dut.
+[treeopen] TOP.top_tb.dut.ctrl.decoder_sigs.
+[sst_width] 41
+[signals_width] 193
+[sst_expanded] 0
+[sst_vpaned_height] 238
+@28
+TOP.top_tb.dut.ctrl.clk_i
+@200
+-Control
+@28
+TOP.top_tb.dut.ctrl.inst_valid_i
+@22
+TOP.top_tb.dut.ctrl.inst_i.dest[9:0]
+@28
+TOP.top_tb.dut.ctrl.inst_i.op
+@22
+TOP.top_tb.dut.ctrl.inst_i.src1[9:0]
+TOP.top_tb.dut.ctrl.inst_i.src2[9:0]
+@28
+TOP.top_tb.dut.ctrl.inst_ready_o
+TOP.top_tb.dut.ctrl.stall_decode
+@200
+-Memory read port A
+@28
+TOP.top_tb.dut.port_b.en
+@22
+TOP.top_tb.dut.port_b.addr[9:0]
+TOP.top_tb.dut.port_b.row[31:0]
+@200
+-Memory read port B
+@28
+TOP.top_tb.dut.port_a.en
+@22
+TOP.top_tb.dut.port_a.addr[9:0]
+@c00022
+TOP.top_tb.dut.port_a.row[31:0]
+@28
+(0)TOP.top_tb.dut.port_a.row[31:0]
+(1)TOP.top_tb.dut.port_a.row[31:0]
+(2)TOP.top_tb.dut.port_a.row[31:0]
+(3)TOP.top_tb.dut.port_a.row[31:0]
+(4)TOP.top_tb.dut.port_a.row[31:0]
+(5)TOP.top_tb.dut.port_a.row[31:0]
+(6)TOP.top_tb.dut.port_a.row[31:0]
+(7)TOP.top_tb.dut.port_a.row[31:0]
+(8)TOP.top_tb.dut.port_a.row[31:0]
+(9)TOP.top_tb.dut.port_a.row[31:0]
+(10)TOP.top_tb.dut.port_a.row[31:0]
+(11)TOP.top_tb.dut.port_a.row[31:0]
+(12)TOP.top_tb.dut.port_a.row[31:0]
+(13)TOP.top_tb.dut.port_a.row[31:0]
+(14)TOP.top_tb.dut.port_a.row[31:0]
+(15)TOP.top_tb.dut.port_a.row[31:0]
+(16)TOP.top_tb.dut.port_a.row[31:0]
+(17)TOP.top_tb.dut.port_a.row[31:0]
+(18)TOP.top_tb.dut.port_a.row[31:0]
+(19)TOP.top_tb.dut.port_a.row[31:0]
+(20)TOP.top_tb.dut.port_a.row[31:0]
+(21)TOP.top_tb.dut.port_a.row[31:0]
+(22)TOP.top_tb.dut.port_a.row[31:0]
+(23)TOP.top_tb.dut.port_a.row[31:0]
+(24)TOP.top_tb.dut.port_a.row[31:0]
+(25)TOP.top_tb.dut.port_a.row[31:0]
+(26)TOP.top_tb.dut.port_a.row[31:0]
+(27)TOP.top_tb.dut.port_a.row[31:0]
+(28)TOP.top_tb.dut.port_a.row[31:0]
+(29)TOP.top_tb.dut.port_a.row[31:0]
+(30)TOP.top_tb.dut.port_a.row[31:0]
+(31)TOP.top_tb.dut.port_a.row[31:0]
+@1401200
+-group_end
+@200
+-Memory write port C
+@28
+TOP.top_tb.dut.port_c.en
+@22
+TOP.top_tb.dut.port_c.addr[9:0]
+TOP.top_tb.dut.port_c.row[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
