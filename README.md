@@ -16,8 +16,14 @@ source env.sh
 
 ## Compilation
 
-For the moment in order to compile, we can do so using the following command:
+In order to compile the testbenches you can use the following instruction:
 
 ```
-compile
+compile -top TB_TOP_NAME [-trace] [-test TESTNAME]
 ```
+
+The testbench is suposed to be found at ```$REPOROOT/tb/TB_TOP_NAME/TB_TOP_NAME.sv```. All the files in the folder will be added to the compilation.
+
+The ```-trace``` option is necessary in order to be able to produce a trace.
+
+The specific test folder is expected to be found at ```$REPOROOT/tb/TB_TOP_NAME/tests/TESTNAME```. All the files in the folder will be soft-linked to the execution folder.
