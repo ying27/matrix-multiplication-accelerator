@@ -13,16 +13,16 @@ while [ $# -ne 0 ]
 do
     arg="$1"
     case "$arg" in
-        -top) #TB path
+        --top) #TB path
             RTL_TOP=$2
             CFLAGS+=\ -DCXX_TOP_LEVEL=V$2
             shift
             ;;
-        -trace)#Trace or not
+        --trace)#Trace or not
             EXTRA_VERILATOR_ARGS+=--trace-fst\ --trace-structs
             CFLAGS+=\ -DTRACE
             ;;
-        -test)#Testpath
+        --test)#Testpath
             TESTNAME=$2
             HAS_TEST=true
             shift
