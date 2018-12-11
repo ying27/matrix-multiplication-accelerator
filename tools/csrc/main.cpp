@@ -21,7 +21,7 @@ void usage(char* name) {
 void getArgs(int argc, char* argv[], uint64_t &timeout, bool &trace, char* traceFile){
 
     trace = false;
-    timeout = 1;
+    timeout = 1000;
 
     struct option argOptions[] = {
         { "trace", required_argument, 0, 1},

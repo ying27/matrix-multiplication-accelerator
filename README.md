@@ -27,3 +27,17 @@ The testbench is suposed to be found at ```$REPOROOT/tb/TB_TOP_NAME/TB_TOP_NAME.
 The ```-trace``` option is necessary in order to be able to produce a trace.
 
 The specific test folder is expected to be found at ```$REPOROOT/tb/TB_TOP_NAME/tests/TESTNAME```. All the files in the folder will be soft-linked to the execution folder.
+
+## Execution
+
+The tests can be run by using:
+
+```
+run TB_TOP_NAME [--timeout TIMEOUT(default=1000)] [--trace TRACE_FILE.fst]
+```
+
+This tool only works if the model has been previously compiled using the aforementioned tool.
+
+The ```--timeout``` option specifies the maximum amount of cycles that will be simulated.
+
+The ```--trace``` option allows for the enables of a trace file. If the test has not been compiled with the ``-trace`` option this parameter will be ignored.
