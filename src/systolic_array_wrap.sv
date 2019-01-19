@@ -62,8 +62,8 @@ module systolic_array_wrap (
     always_comb begin
         next_ctrl_counter = ctrl_counter > 0 ? ctrl_counter - 1: 0;
         if (last_i) begin
-            next_ctrl_counter = (2*SYS_ARRAY_SIZE) + 2;
-        end
+            next_ctrl_counter = (2*SYS_ARRAY_SIZE) + 4; //+2: for 2 cycles less
+        end                                             //+4: to leave the drain array with 0s
     end
 
 endmodule
