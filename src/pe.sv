@@ -27,10 +27,10 @@ module pe (
     //-----------------------------
     // Delay clock gate by 1 cycle
     //-----------------------------
-    logic data_en_c, data_en_n, ab_data_en;
-    assign ab_data_en = (a_data_i.enable && b_data_i.enable);
-    `FF_RESET_EN(clk_i, rst_i, (ab_data_en || data_en_c), ab_data_en, data_en_c, '0)
-    assign data_en_n = ab_data_en || data_en_c;
+    logic ab_data_en_n, ab_data_en_c, data_en_n;
+    assign ab_data_en_n = (a_data_i.enable && b_data_i.enable);
+    assign ab_data_en_c = (a_data_o.enable && b_data_o.enable);
+    assign data_en_n = ab_data_en_n || ab_data_en_c;
 
     //-----------------------
     // Data Passthrough
