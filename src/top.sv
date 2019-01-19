@@ -24,6 +24,7 @@ module top(
     output logic         inst_ready_o
     );
 
+    logic enable;
     systolic_feed_t sys_input;
     data_t [SYS_ARRAY_SIZE-1:0] sys_output;
     ctrl_signals_t ctrl_signals;
@@ -65,7 +66,8 @@ module top(
         //Signals to systolic
         .a_o        ( sys_input.a               ),
         .b_o        ( sys_input.b               ),
-        .last_o     ( sys_input.last            )
+        .last_o     ( sys_input.last            ),
+        .en_o       ( enable                    )
 
         );
 
@@ -88,6 +90,7 @@ module top(
 
     systolic_array_wrap systolic(
         .clk_i     ( clk_i                     ),
+        .en_i      ( enable                    ),
         .rst_i     ( rst_i                     ),
 
         //Input data
