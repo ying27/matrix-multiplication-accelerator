@@ -55,7 +55,9 @@ module systolic_array_wrap (
     //////////////////////////////////////////////////////////
 
     assign ctrl = ctrl_counter[0];
-    `FF_RESET(clk_i, rst_i, next_ctrl_counter, ctrl_counter, '0)
+    logic  ctrl_en;
+    assign ctrl_en = (last_i || (ctrl_counter != 0));
+    `FF_RESET_EN(clk_i, rst_i, ctrl_en, next_ctrl_counter, ctrl_counter, '0)
 
     always_comb begin
         next_ctrl_counter = ctrl_counter > 0 ? ctrl_counter - 1: 0;

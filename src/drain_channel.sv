@@ -20,24 +20,32 @@ module drain_channel(
     input  drain_data_t left_pe_i,
     input  drain_data_t right_pe_i,
 
-    input  data_t       ch_down_i,
-    output data_t       ch_up_o
+    input  drain_data_t ch_down_i,
+    output drain_data_t ch_up_o
 );
 
-    data_t data_pipe_n, data_pipe_q;
+    drain_data_t data_pipe_n, data_pipe_q;
 
-    `FF_RESET(clk_i, rst_i, data_pipe_n, data_pipe_q, '0)
+    logic drain_horizontal, drain_vertical;
+    assign drain_horizontal = ((left_pe_i.enable || right_pe_i.enable) == 1'b1);
+    assign drain_vertical = ch_down_i.enable;
+
+    logic drain_en;
+    assign drain_en = drain_horizontal || drain_vertical || data_pipe_q.enable;
+
+    `FF_RESET_EN(clk_i, rst_i, drain_en, data_pipe_n, data_pipe_q, '0)
+
 
     always_comb begin
-        if ((left_pe_i.enable || right_pe_i.enable) == 1'b0) begin
+        if (drain_horizontal == 1'b0) begin
             data_pipe_n = ch_down_i;
         end
         else begin
             if (left_pe_i.enable == 1'b1) begin
-                data_pipe_n = left_pe_i.data;
+                data_pipe_n = left_pe_i;
             end
             else begin
-                data_pipe_n = right_pe_i.data;
+                data_pipe_n = right_pe_i;
             end
         end
     end

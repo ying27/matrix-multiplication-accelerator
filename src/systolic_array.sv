@@ -58,13 +58,15 @@ module systolic_array (
     // -----------------------------
     // Drain Channel wires
     // -----------------------------
-    data_t [SYS_ARRAY_SIZE:0][DRAIN_CHANNEL_SIZE-1:0] drain_bus;
+    drain_data_t [SYS_ARRAY_SIZE:0][DRAIN_CHANNEL_SIZE-1:0] drain_bus;
 
 
     // -----------------------------
     // Drain Channel Instantiation
     // -----------------------------
-    assign c_o = drain_bus[0];
+    for (genvar k = 0; k < DRAIN_CHANNEL_SIZE; k++) begin
+        assign c_o[k] = drain_bus[0][k].data;
+    end
     assign drain_bus[SYS_ARRAY_SIZE] = '0;
 
     for (genvar i = 0; i < SYS_ARRAY_SIZE; i = i + 1) begin : DRAIN_ROWS
