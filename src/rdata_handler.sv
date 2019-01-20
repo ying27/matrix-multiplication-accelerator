@@ -31,6 +31,7 @@ module rdata_handler (
     output data_t [SYS_ARRAY_SIZE-1:0] a_o,
     output data_t [SYS_ARRAY_SIZE-1:0] b_o,
     output                             last_o,
+    output logic                       en_o,
 
     // Memory interface signals
     output logic                       en_a_o,
@@ -139,5 +140,7 @@ module rdata_handler (
     assign addr_b_o = (current == IDLE) ? addr_b_i : addr_b_c;
     assign a_o      = (acc_val == 1'b1) ? rdata_a_i : '0; //TODO: temporal until we support smaller Ns
     assign b_o      = (acc_val == 1'b1) ? rdata_b_i : '0; //TODO: temporal until we support smaller Ns
+
+    assign en_o = acc_val;
 
 endmodule

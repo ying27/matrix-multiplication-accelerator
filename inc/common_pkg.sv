@@ -36,6 +36,7 @@ package common_pkg;
     typedef struct packed {
         data_t data;
         logic  last;
+        logic  enable;
     } matrix_data_t;
 
     typedef struct packed {

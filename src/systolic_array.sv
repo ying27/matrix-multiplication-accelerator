@@ -20,7 +20,7 @@ module systolic_array (
     input  matrix_data_t [SYS_ARRAY_SIZE-1:0]     a_i,
     input  matrix_data_t [SYS_ARRAY_SIZE-1:0]     b_i,
 
-    output data_t        [DRAIN_CHANNEL_SIZE-1:0] c_o
+    output drain_data_t  [DRAIN_CHANNEL_SIZE-1:0] c_o
 );
 
     // -----------------------------
@@ -58,7 +58,7 @@ module systolic_array (
     // -----------------------------
     // Drain Channel wires
     // -----------------------------
-    data_t [SYS_ARRAY_SIZE:0][DRAIN_CHANNEL_SIZE-1:0] drain_bus;
+    drain_data_t [SYS_ARRAY_SIZE:0][DRAIN_CHANNEL_SIZE-1:0] drain_bus;
 
 
     // -----------------------------
