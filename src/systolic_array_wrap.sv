@@ -25,7 +25,7 @@ module systolic_array_wrap (
     end
 
     `DELAY_ARRAY(clk_i, rst_i, 1, SYS_ARRAY_SIZE, m_a, d_a)
-    `DELAY_ARRAY(clk_i, rst_i, 1, SYS_ARRAY_SIZE, m_b, d_b)
+    `TRANSPOSE_ARRAY(clk_i, rst_i, 1, SYS_ARRAY_SIZE, m_b, d_b)
 
     systolic_array i_systolic_array (
         .clk_i ( clk_i   ),
