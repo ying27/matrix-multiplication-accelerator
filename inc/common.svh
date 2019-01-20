@@ -111,7 +111,7 @@
         \
         logic[$clog2(SIZE)-1:0] counter, counter_next;\
         \
-        `FF_RESET(CLK, RST, counter_next, counter, '0);\
+        `FF_RESET_EN(CLK, RST, EN, counter_next, counter, '0);\
         \
         assign counter_next = EN? ((counter == SIZE-1)? '0 :  counter+1) : '0;\
         \
@@ -120,7 +120,7 @@
             matrix_data_t [$size(IN)-1:0] intercon;\
             \
             for(genvar gv_i=1; gv_i < $size(IN); ++gv_i) begin\
-                `FF_RESET(CLK, RST, intercon[gv_i], ff_out[gv_i], '0);\
+                `FF_RESET_EN(CLK, RST, (intercon[gv_i].enable || ff_out[gv_i].enable), intercon[gv_i], ff_out[gv_i], '0);\
             end\
             \
             for(genvar gv_i=0; gv_i < $size(IN)-1; ++gv_i) begin\
