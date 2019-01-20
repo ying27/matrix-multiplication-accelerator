@@ -20,7 +20,7 @@ module systolic_array (
     input  matrix_data_t [SYS_ARRAY_SIZE-1:0]     a_i,
     input  matrix_data_t [SYS_ARRAY_SIZE-1:0]     b_i,
 
-    output data_t        [DRAIN_CHANNEL_SIZE-1:0] c_o
+    output drain_data_t  [DRAIN_CHANNEL_SIZE-1:0] c_o
 );
 
     // -----------------------------
@@ -64,9 +64,7 @@ module systolic_array (
     // -----------------------------
     // Drain Channel Instantiation
     // -----------------------------
-    for (genvar k = 0; k < DRAIN_CHANNEL_SIZE; k++) begin
-        assign c_o[k] = drain_bus[0][k].data;
-    end
+    assign c_o = drain_bus[0];
     assign drain_bus[SYS_ARRAY_SIZE] = '0;
 
     for (genvar i = 0; i < SYS_ARRAY_SIZE; i = i + 1) begin : DRAIN_ROWS

@@ -16,7 +16,7 @@ module systolic_array_wrap (
     int ctrl_counter, next_ctrl_counter;
  
     matrix_data_t [SYS_ARRAY_SIZE-1:0] m_a, m_b, d_a, d_b;
-    data_t [DRAIN_CHANNEL_SIZE-1:0] drain_c;
+    drain_data_t [DRAIN_CHANNEL_SIZE-1:0] drain_c;
 
     for (genvar m_i=0; m_i < SYS_ARRAY_SIZE; m_i++) begin
         assign m_a[m_i].data   = a[m_i];
@@ -27,8 +27,8 @@ module systolic_array_wrap (
         assign m_b[m_i].enable = en_i;
     end
 
-    `DELAY_ARRAY(clk_i, rst_i, 1, SYS_ARRAY_SIZE, m_a, d_a)
-    `DELAY_ARRAY(clk_i, rst_i, 1, SYS_ARRAY_SIZE, m_b, d_b)
+    `DELAY_ARRAY_CG(clk_i, rst_i, 1'b1, matrix_data_t, SYS_ARRAY_SIZE, m_a, d_a)
+    `DELAY_ARRAY_CG(clk_i, rst_i, 1'b1, matrix_data_t, SYS_ARRAY_SIZE, m_b, d_b)
 
     systolic_array i_systolic_array (
         .clk_i ( clk_i   ),
